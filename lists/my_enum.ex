@@ -60,7 +60,19 @@ defmodule MyEnum do
     [to]
   end
 
+  def span(from, to) when from > to do
+    [from]
+  end
+
   def span(from, to) do
     [from] ++ span(from + 1, to)
+  end
+
+  def primes_up_to(n) do
+    lc x inlist span(2,n), length(divisors(x))==0, do: x
+  end
+
+  defp divisors x do
+    lc y inlist span(2,round(:math.sqrt(x))), y != x, rem(x,y)==0, do: y
   end
 end
