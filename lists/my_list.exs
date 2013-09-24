@@ -46,4 +46,81 @@ defmodule MyList do
 
   def span1(from, to) when from > to, do: []
   def span1(from, to), do: [from | span1(from + 1, to)]
+
+  # Exercise: ListsAndRecursion-5
+
+  # .all?
+  # MyList.all?([1,2,3], &(&1 > 2)) # => false
+  # MyList.all?([1,2,3], &(&1 < 5)) # => true
+  def all?([], _fun), do: true
+  def all?([head | tail], fun), do: fun.(head) && all?(tail, fun)
+
+  # .each
+  # MyList.each [1,2,3], &(IO.puts "#{&1}")
+  # 1
+  # 2
+  # 3
+  # :ok
+  def each([], _fun), do: :ok
+  def each([ head | tail ], fun) do
+    fun.(head)
+    each(tail, fun)
+  end
+
+  # .filter
+  # MyList.filter [1,2,3,4], &(&1 > 2) # => [3,4]
+  def filter([], _fun), do: []
+  def filter([ head | tail ], fun) do
+    if fun.(head) do
+      [ head | filter(tail, fun) ]
+    else
+      filter(tail, fun)
+    end
+  end
+
+  # .split
+  # MyList.split([1, 2, 3], 2)
+  # { [1,2], [3] }
+  # MyList.split([1, 2, 3], 10)
+  # { [1,2,3], [] }
+  # MyList.split([1, 2, 3], 0)
+  # { [], [1,2,3] }
+  # MyList.split([1, 2, 3], -1)
+  # { [1,2], [3] }
+  # MyList.split([1, 2, 3], -5)
+  # { [], [1,2,3] }
+  def split(collection, count) do
+    _split(collection, count, { [], [] })
+  end
+
+  defp _split([], _count, result), do: result
+  defp _split(collection, count, result) when count < 0 and abs(count) <= length(collection) do
+    _split(collection, length(collection) + count, result)
+  end
+  defp _split([ head | tail ], count, { left, right }) when length(left) < count do
+    _split(tail, count, { left ++ [head], right })
+  end
+  defp _split([ head | tail ], count, { left, right }) do
+    _split(tail, count, { left, right ++ [head] })
+  end
+
+  # .take
+  # MyList.take([1, 2, 3], 2)
+  # [1,2]
+  # MyList.take([1, 2, 3], 10)
+  # [1,2,3]
+  # MyList.take([1, 2, 3], 0)
+  # []
+  # MyList.take([1, 2, 3], -1)
+  # [1,2]
+  def take(collection, count), do: _take(collection, count, [])
+
+  defp _take([], _, result), do: result
+  defp _take(_, count, result) when length(result) == count, do: result
+  defp _take(collection, count, result) when count < 0 do
+    _take(collection, length(collection) + count, result)
+  end
+  defp _take([ head | tail], count, result) do
+    _take(tail, count, result ++ [head])
+  end
 end
