@@ -123,4 +123,25 @@ defmodule MyList do
   defp _take([ head | tail], count, result) do
     _take(tail, count, result ++ [head])
   end
+
+  # Exercise: ListsAndRecursion-6
+  #
+  # .flatten(list)
+  # MyList.flatten([1,[2]])
+  # [1,2]
+  # MyList.flatten([1,[2,3,[4]], 5, [[[6]]]])
+  # [1,2,3,4,5,6]
+  # MyList.flatten([])
+  # []
+  # MyList.flatten([1,[]])
+  # [1]
+  def flatten(list), do: _flatten(list, [])
+
+  defp _flatten([], result), do: result
+  defp _flatten([ head | tail ], result) when is_list(head) do
+    _flatten(tail, _flatten(head, result))
+  end
+  defp _flatten([ head | tail ], result) do
+    _flatten(tail, result ++ [head])
+  end
 end
