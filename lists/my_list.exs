@@ -144,4 +144,13 @@ defmodule MyList do
   defp _flatten([ head | tail ], result) do
     _flatten(tail, result ++ [head])
   end
+
+  # Exercise: ListsAndRecursion-7
+  #
+  # MyList.prime_from_2_to(10)
+  # [2,3,5,7]
+  def prime_from_2_to(n) do
+    range = span(2,n)
+    range -- (lc x inlist range, y inlist range, x > y, rem(x,y) == 0, do: x)
+  end
 end
