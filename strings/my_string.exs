@@ -1,7 +1,7 @@
-defmodule Formatter do
+defmodule MyString do
   # Exercise: StringsAndBinaries-5
   #
-  # Formatter.center(["cat", "zebra", "elephant"])
+  # MyString.center(["cat", "zebra", "elephant"])
   #   cat
   #  zebra
   # elephant
@@ -21,7 +21,7 @@ defmodule Formatter do
 
   # Exercise: StringsAndBinaries-6
   #
-  # Formatter.capitalize_sentences("oh. a DOG. woof.")
+  # MyString.capitalize_sentences("oh. a DOG. woof.")
   # "Oh. A dog. Woof."
   def capitalize_sentences(text) do
     text
