@@ -18,4 +18,15 @@ defmodule Formatter do
   def print(words) do
     Enum.each words, &(IO.puts &1)
   end
+
+  # Exercise: StringsAndBinaries-6
+  #
+  # Formatter.capitalize_sentences("oh. a DOG. woof.")
+  # "Oh. A dog. Woof."
+  def capitalize_sentences(text) do
+    text
+    |> String.split(". ")
+    |> Enum.map(&(String.capitalize(&1)))
+    |> Enum.join(". ")
+  end
 end
