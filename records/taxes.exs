@@ -1,6 +1,20 @@
 # Exercise: Records-1
 defrecord Order, id: nil, ship_to: nil, net_amount: 0.0, total_amount: 0.0
 
+defmodule SalesReport do
+  def print(orders) do
+    IO.puts "---------------------------------------------"
+    IO.puts "|  Id | Ship To | Net Amount | Total Amount |"
+    IO.puts "---------------------------------------------"
+    Enum.each(orders, &_print_order(&1))
+    IO.puts "---------------------------------------------"
+  end
+
+  defp _print_order(order) do
+    :io.fwrite("|~4B |~8s |~11.2f |~13.2f |~n", [order.id, order.ship_to, order.net_amount, order.total_amount])
+  end
+end
+
 # SimpleCsv.parse("strings/sales.csv")
 defmodule SimpleCsv do
   def parse(filename) do
@@ -40,6 +54,6 @@ defmodule Taxes do
   def run do
     tax_rates = [ NC: 0.075, TX: 0.08 ]
     orders = Enum.map(SimpleCsv.parse("strings/sales.csv"), &Order.new(&1))
-    IO.inspect Taxes.calc_order_totals(orders, tax_rates)
+    SalesReport.print Taxes.calc_order_totals(orders, tax_rates)
   end
 end
